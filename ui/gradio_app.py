@@ -74,19 +74,23 @@ def chat_with_agent(message, history, session_id="default"):
         return history
 
 
-def ingest_documents(files, progress=gr.Progress()):
+def ingest_documents(files, current_status, progress=gr.Progress()):
     """
     Ingest documents into vector database
     
     Args:
         files: List of uploaded files
+        current_status: Current status text (to append to)
         progress: Gradio progress tracker
     
     Returns:
-        Status message
+        Updated status message with history
     """
     if not files:
-        return "No files uploaded."
+        return current_status or "No files uploaded."
+    
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
     results = []
     total_chunks = 0
@@ -130,13 +134,37 @@ def ingest_documents(files, progress=gr.Progress()):
     
     progress(1.0, desc="Complete!")
     
-    summary = f"**Ingestion Complete**\n\n"
-    summary += f"Total chunks created: {total_chunks}\n\n"
-    summary += "\n".join(results)
+    # Create new entry with timestamp
+    new_entry = f"### 📁 Upload Session - {timestamp}\n"
+    new_entry += f"**Total chunks:** {total_chunks}\n\n"
+    new_entry += "\n".join(results)
+    new_entry += "\n\n---\n\n"
+    
+    # Append to existing history (new entries on top)
+    # Extract actual history if processing message was prepended
+    if current_status and current_status.strip():
+        # Remove the processing message if present
+        if current_status.startswith("⏳"):
+            # Extract history after the processing message
+            parts = current_status.split("\n\n", 1)
+            if len(parts) > 1:
+                actual_history = parts[1]
+            else:
+                actual_history = ""
+        else:
+            actual_history = current_status
+        
+        # Append new entry to history
+        if actual_history.strip():
+            updated_status = new_entry + actual_history
+        else:
+            updated_status = new_entry
+    else:
+        updated_status = new_entry
     
     logger.info(f"Ingestion complete: {total_chunks} total chunks")
     
-    return summary
+    return updated_status
 
 
 def get_system_status():
@@ -272,11 +300,21 @@ with gr.Blocks(
         ingest_btn = gr.Button("Process Documents", variant="primary")
         ingest_status = gr.Markdown()
         
+        # Process documents with loading indicator and auto-clear
         ingest_btn.click(
-            ingest_documents,
-            inputs=[file_upload],
+            lambda status: "⏳ **Processing...** Please wait while we analyze your documents.\n\n" + (status or ""),
+            inputs=[ingest_status],
             outputs=[ingest_status]
+        ).then(
+            ingest_documents,
+            inputs=[file_upload, ingest_status],
+            outputs=[ingest_status]
+        ).then(
+            lambda: None,  # Auto-clear after processing so you can upload more
+            outputs=[file_upload]
         )
+        
+        gr.Markdown("*After processing, click the upload area above to add more files*")
     
     with gr.Tab("⚙️ System Status"):
         gr.Markdown("""

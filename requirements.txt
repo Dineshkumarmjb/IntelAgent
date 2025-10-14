@@ -8,9 +8,9 @@ langchain-core>=0.3.17
 # LLM & Embeddings
 openai==1.54.5
 
-# Vector Database
-chromadb==0.5.23
-sentence-transformers==3.3.1
+# Vector Database (DOWNGRADED to match FinBot_Final)
+chromadb==0.4.15
+sentence-transformers==2.2.2
 
 # Search
 rank-bm25==0.2.2
