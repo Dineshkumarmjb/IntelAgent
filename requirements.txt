@@ -1,0 +1,59 @@
+# Core Framework
+langchain==0.3.7
+langchain-openai==0.2.8
+langchain-community==0.3.5
+langgraph==0.2.45
+langchain-core>=0.3.17
+
+# LLM & Embeddings
+openai==1.54.5
+
+# Vector Database
+chromadb==0.5.23
+sentence-transformers==3.3.1
+
+# Search
+rank-bm25==0.2.2
+
+# Web Search
+tavily-python==0.5.0
+
+# FastAPI Backend
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+python-multipart==0.0.12
+
+# UI
+gradio==5.7.1
+
+# Document Processing
+pypdf==5.1.0
+python-docx==1.1.2
+openpyxl==3.1.5
+pandas==2.2.3
+
+# Code Execution
+RestrictedPython==7.4
+
+# Utilities
+python-dotenv==1.0.1
+pydantic==2.10.3
+pydantic-settings==2.6.1
+requests==2.32.3
+
+# Logging
+colorlog==6.9.0
+
+# Database
+sqlalchemy>=1.4,<2.0.36
+
+# Image Processing
+Pillow==11.0.0
+
+# Audio (for future voice support)
+# openai-whisper==20231117
+
+# Testing
+pytest==8.3.4
+pytest-asyncio==0.24.0
+

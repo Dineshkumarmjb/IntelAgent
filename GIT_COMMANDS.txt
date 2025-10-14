@@ -1,0 +1,66 @@
+===========================================
+ QUICK GIT COMMANDS FOR GITHUB UPLOAD
+===========================================
+
+1. NAVIGATE TO DIRECTORY
+   cd D:\PersonalProject\FinBot\IntelAgent\final
+
+2. INITIALIZE GIT
+   git init
+
+3. RENAME README (OPTIONAL)
+   Rename-Item README_GITHUB.md README.md
+
+4. ADD ALL FILES
+   git add .
+
+5. COMMIT
+   git commit -m "Initial commit: IntelAgent multi-agent AI system"
+
+6. CREATE REPO ON GITHUB
+   - Go to: https://github.com/new
+   - Name: IntelAgent
+   - Don't initialize with README
+   - Copy the repo URL
+
+7. ADD REMOTE & PUSH
+   git remote add origin https://github.com/YOUR_USERNAME/IntelAgent.git
+   git branch -M main
+   git push -u origin main
+
+===========================================
+
+VERIFY NO SECRETS:
+   # Search for API keys before pushing
+   git grep -i "sk-"
+   git grep -i "tvly-"
+   
+   # Should return nothing!
+
+===========================================
+
+REPOSITORY SETTINGS (After Upload):
+
+Description:
+  Universal multi-agent AI system using LangChain, OpenAI GPT-4, 
+  ChromaDB, and Tavily. Features intelligent query routing, RAG 
+  pipeline, web search, code execution, and full source attribution.
+
+Topics (Tags):
+  ai, multi-agent, langchain, openai, gpt-4, chromadb, 
+  vector-database, rag, python, fastapi, gradio, 
+  machine-learning, artificial-intelligence
+
+===========================================
+
+RESUME LINE:
+
+Developed IntelAgent, a multi-agent AI system using Python, LangChain, 
+OpenAI GPT-4, ChromaDB, and Tavily that orchestrates 5 specialized 
+agents (RAG, web search, code execution, tools, chat) with FastAPI 
+backend, Gradio UI, and full source attribution.
+
+GitHub: github.com/YOUR_USERNAME/IntelAgent
+
+===========================================
+
